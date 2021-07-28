@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vincent Mazet (ICube & University of Strasbourg)</title>
+  <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="vincent mazet, icube, lsiit, inverse problems, Bayesian approach, sparse spike train restoration, baseline estimation, sparse spike train deconvolution, simulation of positive normal variables, spectroscopy, astronomy" />
+  <meta name="description" content="Vincent MAZET's homepage, ICube (UMR 7357) & University of Strasbourg." />
+  <link rel="stylesheet" href="css/knacss.css" media="all">
+  <link rel="stylesheet" href="css/vincmazet.css" media="all">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="website">
+
+<!-- Header *************************************************************** -->
+
+<header>
+
+<h1>PEPS SPECTRODEC : nouvelles approches pour la décomposition des signaux spectroscopiques</h1>
+
+</header>
+
+<!-- ********************************************************************** -->
+
+<section>
+
+  <h3>Résumé</h3>
+
+  <p>
+  Un signal spectroscopique (ou spectre) représente la distribution de particules physiques
+  ou d'ondes électromagnétiques en fonction de leur énergie, de leur longueur d'onde, etc.
+  Il est constitué d'un ensemble de composantes spectrales (les « raies ») dont les caractéristiques
+  (positions, amplitudes, largeurs, ...) informent sur l'objet analysé. Décomposer
+  un spectre consiste à estimer le nombre de raies et leurs caractéristiques. C'est un problème
+  difficile en raison du faible rapport signal-à-bruit, de l'échantillonnage parfois grossier et,
+  surtout, des superpositions de raies.
+  </p>
+
+  <p>
+  Ce projet (financé par un PEPS Rupture du CNRS) a l'ambition de développer des méthodes originales de décomposition spectroscopique.
+  Le <a href="#objectif1">premier objectif</a> concerne la décomposition conjointe, à l'aide de méthodes statistiques, d'une séquence de spectres dont les raies évoluent et sont en nombre inconnu.
+  Le <a href="#objectif2">second objectif</a> concerne la conception de méthodes d'approximation parcimonieuse adaptées à la décomposition spectroscopique dans le but d'accélérer les méthodes actuelles : le défi est d'utiliser un dictionnaire très grand et très redondant.
+  L'évaluation sera faite sur des données physicochimiques et radioastronomiques.
+  </p>
+
+</section>
+
+<!-- ********************************************************************** -->
+
+<section>
+
+  <h3>Membres du projet</h3>
+
+  <ul>
+  <li>Vincent Mazet (LSIIT), porteur de projet</li>
+  <li>Sylvain Faisan (LSIIT)</li>
+  <li>Christophe Collet (LSIIT)</li>
+  <li>Charles Soussen (CRAN)</li>
+  <li>El-Hadi Djermoune (CRAN)</li>
+  <li>Bernd Vollmer (Observatoire de Strasbourg)</li>
+  <li>Jean-Michel Mestdagh (Laboratoire Francis Perrin)</li>
+  <li>Lionel Poisson (Laboratoire Francis Perrin)</li>
+  <li>Marc-André Gaveau (Laboratoire Francis Perrin)</li>
+  </ul>
+
+</section>
+
+<!-- ********************************************************************** -->
+
+<section>
+
+  <h3 id="objectif1">Objectif scientifique n°1 : décomposition d'une séquence de spectres</h3>
+
+  <p>
+  Les données peuvent être considérées comme une séquence
+  de spectres différents répartis sur une grille faisant apparaître une évolution
+  lente des raies en position, amplitude et largeur à travers la séquence. Le fait que le
+  nombre de raies soit inconnu et qu'elles peuvent se recouvrir et se croiser au cours de la
+  séquence est une difficulté à prendre en compte. Le premier objectif de ce PEPS est de
+  décomposer conjointement les spectres de la séquence en fournissant également une
+  classification des raies afin de suivre l'évolution d'un composant chimique au cours de la
+  réaction ou d'observer la cinématique des gaz au sein des galaxies.
+  </p>
+  <p>
+  Ce n'est pas un problème
+  de séparation de sources car il n'est pas possible de modéliser les données comme
+  une somme de spectres sources, puisque les positions et les largeurs des raies évoluent.
+  Plusieurs travaux ont déjà proposé des méthodes de décomposition
+  spectroscopique mais, à notre connaissance, la décomposition conjointe d'une séquence
+  de spectres n'a jamais été traitée. Nous avons déjà obtenu des résultats encourageants
+  lorsque le nombre de raies est supposé connu et constant en utilisant, au sein d'un modèle
+  bayésien, un champ de Markov pour modéliser l'évolution douce des raies et une
+  méthode MCMC (<i>Monte Carlo Markov chain</i>) couplée à un recuit simulé pour estimer le
+  maximum a posteriori. Notre objectif est d'étendre cette méthode à l'estimation du
+  nombre de raies et de classes en utilisant l'algorithme RJMCMC (<i>reversible jump
+  MCMC</i>). Le défi sera de trouver les mouvements qui explorent convenablement l'espace
+  des solutions en un temps acceptable.
+  </p>
+
+</section>
+
+<!-- ********************************************************************** -->
+
+<section>
+
+  <h3 id="objectif2">Objectif scientifique n°2 : approximation parcimonieuse pour la décomposition spectroscopique</h3>
+
+  <p>
+  Les méthodes de décomposition spectroscopique des logiciels commerciaux
+  (Origin, PeakFit...) sont très simples et rapides mais ne permettent pas d'obtenir des résultats
+  fiables sur les données considérées. À l'inverse, les méthodes MCMC (telles que
+  celles utilisées dans le premier objectif) sont efficaces mais leur convergence requiert un
+  temps de calcul excessif. Une alternative est d'exploiter les résultats récents des méthodes d'approximation parcimonieuse. En effet, un spectre est généralement modélisé
+  comme une somme de raies paramétrées (gaussiennes, lorentziennes, ...) et peut donc
+  s'écrire sous la forme <i>y = Ha + b</i> où <i>H</i> est un dictionnaire dont les atomes sont les raies
+  du spectre, <i>a</i> est l'amplitude des raies et <i>b</i> est le bruit. Le risque &mdash; et l'originalité &mdash; est
+  d'utiliser un dictionnaire à la fois très grand et très redondant. Par exemple, une précision
+  d'un dixième sur la position des raies d'un signal de 100 échantillons et en testant 10 largeurs pour chaque raie aboutit à un dictionnaire de 10 000 atomes très corrélés. Le défi
+  consiste à adapter des techniques existantes aux dictionnaires de grande taille.
+  Une idée est d'interdire certaines configurations du vecteur <i>a</i> : en
+  effet, si un atome est sélectionné, on sait qu'un atome de largeur différente mais de
+  même position ne peut pas être choisi : c'est le principe de la parcimonie structurée.
+  </p>
+
+</section>
+
+<!-- Footer *************************************************************** -->
+
+<footer>
+
+<div class="sm:grid md:grid-cols-2 lg:grid-cols-2">
+  <div>
+    <p class="update">Page updated 05/10/2018</p>
+  </div>
+</div>
+
+</footer>
+
+<!-- End ****************************************************************** -->
+
+</div>
+
+</body>
+</html>
