@@ -1,0 +1,342 @@
+// Initialise le div
+function cherchediv(id, w, h)
+{
+    var o = document.getElementById(id);
+    o.style.width = w.toString() + 'px';
+    o.style.height = h.toString() + 'px';
+    o.style.border = '1px dashed black';
+    return o;
+}
+
+// Graphe
+function graphe(id, x, y, w, h)
+{   
+    // Crée un canvas
+    var c = document.createElement('canvas');
+    c.style.position = 'absolute';
+    c.width = w;
+    c.height = h;
+    c.style.left   = x.toString() + 'px';
+    c.style.top    = y.toString() + 'px';
+    c.style.width  = w.toString() + 'px';
+    c.style.height = h.toString() + 'px';
+    c.style.background = 'inherit';
+    id.appendChild(c);
+    
+    // Dessine sur le contexte
+    var g = c.getContext("2d");
+    var i = 0;
+    g.strokeStyle = '#c0c0c0';
+    g.lineWidth = 1;
+    g.beginPath();
+    for(i=0;i<w;i=i+10)
+    {
+        g.moveTo(i+0.5,0);
+        g.lineTo(i+0.5,h);
+    }
+    g.stroke();
+    g.beginPath();
+    for(i=0;i<h;i=i+10)
+    {
+        g.moveTo(0,i+0.5);
+        g.lineTo(w,i+0.5);
+    }
+    g.stroke();
+    return g;
+}
+
+// Etiquette
+function label(id, t, x, y) /*, c, ha)*/
+{
+    var o = document.createElement('div');
+    o.style.position = 'absolute';
+    o.style.left = x.toString() + 'px';
+    o.style.top  = y.toString() + 'px';/*if (ha == 'l')      {o.style.left = y + 'px';}
+    else if (ha == 'r') {o.style.right = y + 'px';}*/
+    /*o.style.color = c;*/
+    o.innerHTML = t;
+    id.appendChild(o);
+    MathJax.Hub.Queue(['Typeset',MathJax.Hub,o]);
+    // http://docs.mathjax.org/en/latest/typeset.html 
+    // http://docs.mathjax.org/en/latest/api/hub.html
+    return o;
+}
+
+// Bouton
+function bouton(id, t, x, y)
+{
+    var o = document.createElement('button');
+    o.style.position = 'absolute';
+    o.style.left = x.toString() + 'px';
+    o.style.top = y.toString() + 'px';
+    o.style.background = '#d0d0f0';
+    var tt = document.createTextNode(t);
+    o.appendChild(tt);
+    id.appendChild(o);
+    return o;
+}
+
+
+// Graph
+function graph(id, x, y, w, h)
+{
+    // Constructeur
+    var c = document.createElement('canvas');
+    c.style.position = 'absolute';
+    c.width = w;
+    c.height = h;
+    c.style.left   = x.toString() + 'px';
+    c.style.top    = y.toString() + 'px';
+    c.style.width  = w.toString() + 'px';
+    c.style.height = h.toString() + 'px';
+    c.style.border = '1px solid #' + Math.floor(Math.random()*16777215).toString(16);
+    id.appendChild(c);
+    
+    // Méthodes
+    this.plot = plot;
+    
+    // plot
+    function plot(xx,yy)
+    {
+        var n;
+        var N = xx.length;
+        var xn = new Array(N);
+        var yn = new Array(N);
+        for (n=0; n<xx.length; n++)
+        {
+            p = [xx[n] yy[n]];//p = this.pt2px(xx[n],yy[n]);
+            xn[n] = p[0];
+            yn[n] = p[1];
+        }
+        line(c.ctx, xn, yn);
+    }
+    
+/*
+    // Propriétés
+    this.ctx = ctx;             // Contexte
+    this.x = x;                 // Abscisse du graphe (px)
+    this.y = y;                 // Ordonnée du graphe (px)
+    this.w = w;                 // Largeur du graphe (px)
+    this.h = h;                 // Hauteur du graphe (px)
+    this.xlim = [-1, 1];        // Abscisses limites (pt)
+    this.ylim = [-1, 1];        // Ordonnées limites (pt)
+    this.xgdelta = 1;           // Espacement de la grille des abscisses (pt) (si = 0 : pas de grille)
+    this.xglength = 5;          // Longeur des marques des abscisses (px)
+    this.xglabel = 1;           // Espacement de la numérotation des abscisses (pt)
+    this.ygdelta = 1;           // Espacement de la grille des ordonnées (pt) (si = 0 : pas de grille)
+    this.yglength = 5;          // Longeur des marques des ordonnées (px)
+    this.yglabel = 1;           // Espacement de la numérotation des ordonnées (pt)
+    this.xtitletext = '';       // Texte en abscisses
+    this.ytitletext = '';       // Texte en ordonnées
+    this.xtickdelta = 1;        // Espacement des marques sur les abscisses (si 0 : pas de marques)
+    this.ytickdelta = 1;        // Espacement des marques sur les ordonnées (si 0 : pas de marques)
+    this.xticklength = 5;       // Taille (en pixel) des marques (si inf -> grille)
+    this.yticklength = 5;       // Taille (en pixel) des marques (si inf -> grille)
+
+    // Méthodes
+    this.pt2px = pt2px;         // Conversion point -> pixel
+    this.px2pt = px2pt;         // Conversion pixel -> point
+    this.clear = clear;         // Efface le graphe
+    this.axes = axes;           // Affiche les axes
+    this.xgrid = xgrid;         // Affiche la grille des abscisses
+    this.ygrid = ygrid;         // Affiche la grille des ordonnées
+    this.xtitle = xtitle;       // Affiche le titre des abscisses
+    this.ytitle = ytitle;       // Affiche le titre des ordonnées
+    this.stem = stem;           // stem (comme en Matlab)
+    this.plot = plot;           // plot (comme en Matlab)
+    this.plotf = plotf;         // plotf
+    
+    // Convertion point du graphe -> pixel du canvas
+    function pt2px(ptx,pty)
+    {
+        var xmin = this.xlim[0], xmax = this.xlim[1];
+        var ymin = this.ylim[0], ymax = this.ylim[1];
+        var x = this.x, y = this.y, w = this.w, h = this.h;
+        var pxx = x + (ptx - xmin) * w / (xmax - xmin);
+        var pxy = y + h - (pty - ymin) * h / (ymax - ymin);
+        return [pxx, pxy];
+    }
+
+    // Convertion point du graphe -> pixel du canvas
+    function px2pt()
+    {
+    }
+
+    // Efface le graphe
+    function clear()
+    {
+        this.ctx.clearRect(this.x, this.y, this.w, this.h);
+    }
+
+    // Affiche les axes
+    function axes()
+    {
+        // Points caractéristiques du graphe
+        var p, x0, y0, x1, x2, y1, y2;
+        p = this.pt2px(0, 0);
+        x0 = Math.round(p[0]);    y0 = Math.round(p[1]);
+        x1 = this.x;
+        x2 = this.x + this.w;
+        y1 = this.y + this.h;
+        y2 = this.y;
+        
+        // Axes
+        // line rajoute systématiquement 0.5 !
+        line(this.ctx, [x1-0.5,x2+0.5], [y0,y0]);
+        line(this.ctx, [x0,x0], [y1+0.5,y2-0.5]);
+    }
+    
+    // Affiche la grille des abscisses
+    function xgrid(delta,length,label)
+    {
+        this.xgriddelta = delta;
+        this.xgridlength = length;
+        this.xgridlabel = label;
+        
+        // On sort si on ne veut pas de grille
+        if (this.xgriddelta == 0)
+            return;
+        
+        var x, xg, p, y0, x1;
+        p = this.pt2px(0, 0);
+        y0 = Math.round(p[1]);
+        x1 = Math.ceil(this.xlim[0]/delta+1e-6);
+        
+        // Marques
+        for (x = x1; x < this.xlim[1]; x += delta)
+        {
+            p = this.pt2px(x, 0);
+            xg = Math.round(p[0]);
+            line(this.ctx, [xg,xg], [y0-length-0.5,y0+length+0.5]);
+        }
+        
+        // On sort si on ne veut pas d'étiquettes
+        if (label == 0)
+            return;
+        
+        // Etiquettes
+        this.ctx.textAlign = 'center';
+        this.ctx.textBaseline = 'top';
+        for (x = x1; x < this.xlim[1]; x += label)
+        {
+            if (x==0) continue;
+            p = this.pt2px(x, 0);
+            xg = Math.round(p[0]);
+            text(this.ctx, x, xg, y0+1.5*length);
+        }
+    }
+    
+    // Affiche la grille des ordonnées
+    function ygrid(delta,length,label)
+    {
+        this.ygriddelta = delta;
+        this.ygridlength = length;
+        this.ygridlabel = label;
+        
+        // On sort si on ne veut pas de grille
+        if (this.ygriddelta == 0)
+            return;
+        
+        var y, yg, p, x0, y1;
+        p = this.pt2px(0, 0);
+        x0 = Math.round(p[0]);
+        y1 = Math.ceil(this.ylim[0]/delta+1e-6);
+        
+        // Marques
+        for (y = y1; y < this.ylim[1]; y += delta)
+        {
+            p = this.pt2px(0, y);
+            yg = Math.round(p[1]);
+            line(this.ctx, [x0-length-0.5,x0+length+0.5], [yg,yg]);
+        }
+        
+        // On sort si on ne veut pas d'étiquettes
+        if (label == 0)
+            return;
+        
+        // Etiquettes
+        this.ctx.textAlign = 'right';
+        this.ctx.textBaseline = 'middle';
+        y1 = this.ylim[0]/label;
+        if (y1 === 0)
+            y1 = 0;
+        else if (y1 > 0)
+            y1 = Math.floor(y1);
+        else
+            y1 = Math.ceil(y1);
+        y1 = y1 * label;
+        for (y = y1; y < this.ylim[1]; y += label)
+        {
+            if (y==0) continue;
+            p = this.pt2px(0, y);
+            yg = Math.round(p[1]);
+            text(this.ctx, y, x0-1.5*length, yg);
+        }
+    }
+    
+    // Affiche le titre des abscisses
+    function xtitle(label)
+    {
+        var p, y0;
+        p = this.pt2px(0, 0);
+        y0 = Math.round(p[1]);
+        this.ctx.textAlign = 'right';
+        this.ctx.textBaseline = 'bottom';
+        text(this.ctx, label, this.x+this.w, y0-1.5*this.ygridlength);
+    }
+    
+    // Affiche le titre des ordonnées
+    function ytitle(label)
+    {
+        var p, x0;
+        p = this.pt2px(0, 0);
+        x0 = Math.round(p[0]);
+        this.ctx.textAlign = 'left';
+        this.ctx.textBaseline = 'top';
+        text(this.ctx, label, x0+1.5*this.ygridlength, this.y);
+    }
+
+    // stem
+    function stem(xx,yy)
+    {
+        var n;
+        var p, x0, x1, y1;
+        p = this.pt2px(0, 0); y0 = Math.round(p[1]); // mettre en variable globale ?
+        for (n=0; n<xx.length; n++)
+        {
+            p = this.pt2px(xx[n],yy[n]);
+            x1 = p[0];
+            y1 = p[1];
+            if (y0 < y1)
+                line(this.ctx, [x1,x1], [y0-0.5,y1+0.5]);
+            else
+                line(this.ctx, [x1,x1], [y0+0.5,y1-0.5]);
+            circlef(this.ctx, x1, y1, 2 + this.ctx.lineWidth);
+        }
+    }
+
+    // plot
+    function plot(xx,yy)
+    {
+        var n;
+        var N = xx.length;
+        var xn = new Array(N);
+        var yn = new Array(N);
+        for (n=0; n<xx.length; n++)
+        {
+            p = this.pt2px(xx[n],yy[n]);
+            xn[n] = p[0];
+            yn[n] = p[1];
+        }
+        line(this.ctx, xn, yn);
+    }
+
+    // plotf
+    function plotf(xx,yy)
+    {
+        this.plot(xx,yy);
+        this.ctx.fill();
+    }
+*/
+}
+

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title>Canvas Test</title>
+        <link href="http://www.html5rocks.com/en/tutorials/canvas/hidpi/demo/styles/main.css" rel="stylesheet">
+</head>
+
+<body onload="init()">
+
+<h1>Original Image:</h1>
+<img id="pic" src="html5rocks.png">
+
+<h1>Canvas Version:</h1>
+<canvas id="canvas" width="500" height="300"></canvas>
+
+<script src="hdpicanvas.js"></script>
+
+<script>
+
+function init () {
+
+    // get the canvas and picture
+    var canvas = document.getElementById('canvas'),
+           pic = document.getElementById('pic');
+	var ctx = canvas.getContext('2d');
+
+    // draw using our wrapper function
+    HDPICanvas.drawImage({ canvas: canvas, image: pic, desx: 10, desy: 10, desw: 300, desh: 90});
+
+    // finally query the various pixel ratios
+    var devicePixelRatio = window.devicePixelRatio || 1;
+    var backingStoreRatio = ctx.webkitBackingStorePixelRatio ||
+                            ctx.mozBackingStorePixelRatio ||
+                            ctx.msBackingStorePixelRatio ||
+                            ctx.oBackingStorePixelRatio ||
+                            ctx.backingStorePixelRatio || 1;
+    backingStoreRatio = 1;
+    var ratio = devicePixelRatio / backingStoreRatio;
+	
+	console.log(devicePixelRatio);
+	console.log(backingStoreRatio);
+	console.log(ratio);
+
+    // upscale the canvas if the two ratios don't match
+    if (devicePixelRatio !== backingStoreRatio)
+    {
+        var oldWidth = canvas.width;
+        var oldHeight = canvas.height;
+
+		canvas.width = oldWidth * ratio;
+		canvas.height = oldHeight * ratio;
+
+		canvas.style.width = oldWidth + 'px';
+		canvas.style.height = oldHeight + 'px';
+
+		// now scale the context to counter
+		// the fact that we've manually scaled
+		// our canvas element
+		ctx.scale(ratio, ratio);
+	}
+
+	ctx.font = '20px Verdana';
+    ctx.fillText("coucou (123456)", 10,150);
+    ctx.fillText(devicePixelRatio,10,180);
+	ctx.fillText(backingStoreRatio,10,200);
+	ctx.fillText(ratio,10,220);
+	ctx.moveTo(100,150.5);
+	ctx.lineTo(300,150.5);
+	ctx.stroke();
+}
+
+</script>
+
+</body></html>
