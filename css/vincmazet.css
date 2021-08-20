@@ -77,7 +77,7 @@ footer {
 }
 .phone:before {
   margin-left:-1.5rem;
-  margin-top:0.1rem; content:url(icomoon/067-phone.svg);
+  margin-top:0.1rem; content:url(icomoon/phone.svg);
   position: absolute;
 }
 
@@ -96,5 +96,14 @@ footer {
 .update:before {
   margin-left:-1.5rem;
   margin-top:0.1rem; content:url(icomoon/079-clock.svg);
+  position: absolute;
+}
+
+.github {
+  margin-left: 1.5rem;
+}
+.github:before {
+  margin-left:-1.5rem;
+  margin-top:0.1rem; content:url(icomoon/github.svg);
   position: absolute;
 }
