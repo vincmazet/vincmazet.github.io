@@ -59,8 +59,13 @@ footer {
 .address:before {
   margin-left:-1.5rem;
   margin-top:0.1rem;
-  content:url(icomoon/072-location.svg);
   position: absolute;
+  content: "";
+  display: inline-block;
+  width: 1.2rem;
+  height: 1.2rem;
+  background: url(icomoon/072-location.svg) no-repeat;
+  background-size: 100%;
 }
 
 .office {
@@ -68,8 +73,14 @@ footer {
 }
 .office:before {
   margin-left:-1.5rem;
-  margin-top:0.1rem; content:url(icomoon/073-location2.svg);
+  margin-top:0.1rem;
   position: absolute;
+  content: "";
+  display: inline-block;
+  width: 1.2rem;
+  height: 1.2rem;
+  background: url(icomoon/073-location2.svg) no-repeat;
+  background-size: 100%;
 }
 
 .phone {
@@ -77,8 +88,14 @@ footer {
 }
 .phone:before {
   margin-left:-1.5rem;
-  margin-top:0.1rem; content:url(icomoon/phone.svg);
+  margin-top:0.1rem;
   position: absolute;
+  content: "";
+  display: inline-block;
+  width: 1.2rem;
+  height: 1.2rem;
+  background: url(icomoon/phone.svg) no-repeat;
+  background-size: 100%;
 }
 
 .email {
@@ -86,8 +103,14 @@ footer {
 }
 .email:before {
   margin-left:-1.5rem;
-  margin-top:0.1rem; content:url(icomoon/070-envelop.svg);
+  margin-top:0.1rem;
   position: absolute;
+  content: "";
+  display: inline-block;
+  width: 1.2rem;
+  height: 1.2rem;
+  background: url(icomoon/070-envelop.svg) no-repeat;
+  background-size: 100%;
 }
 
 .update {
@@ -95,8 +118,14 @@ footer {
 }
 .update:before {
   margin-left:-1.5rem;
-  margin-top:0.1rem; content:url(icomoon/079-clock.svg);
+  margin-top:0.1rem;
   position: absolute;
+  content: "";
+  display: inline-block;
+  width: 1.2rem;
+  height: 1.2rem;
+  background: url(icomoon/079-clock.svg) no-repeat;
+  background-size: 100%;
 }
 
 .github {
@@ -104,6 +133,12 @@ footer {
 }
 .github:before {
   margin-left:-1.5rem;
-  margin-top:0.1rem; content:url(icomoon/github.svg);
+  margin-top:0.1rem;
   position: absolute;
+   content: "";
+   display: inline-block;
+   width: 1.2rem;
+   height: 1.2rem;
+   background: url(icomoon/github.svg) no-repeat;
+   background-size: 100%;
 }
