@@ -157,3 +157,18 @@ footer {
    background: url(icomoon/github.svg) no-repeat;
    background-size: 100%;
 }
+
+.hal {
+  margin-left: 1.5rem;
+}
+.hal:before {
+  margin-left:-1.5rem;
+  margin-top:0.1rem;
+  position: absolute;
+   content: "";
+   display: inline-block;
+   width: 1.2rem;
+   height: 1.2rem;
+   background: url(icomoon/hal.svg) no-repeat;
+   background-size: 100%;
+}
